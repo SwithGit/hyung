@@ -20,10 +20,10 @@ Vercel: **Vite** / Build Command **npm run build** / Output Directory **dist**. 
 
 ## 실제 콘텐츠
 
-사용자가 제공한 `이승준_포트폴리오.pdf` 11쪽을 검토해 정리했습니다.
+사용자가 제공한 포트폴리오 11쪽과 추가 플러그인 제작·배포 페이지를 검토해 정리했습니다. 다운로드 PDF는 총 12쪽입니다.
 
 - **프로젝트 5건:** 국도, 도로 및 방음터널, 고속철도 2025, 지하철도, 고속철도 2026.
-- **핵심역량 4건:** LiDAR·스캔 역설계, 모델링 자동화, 데이터 시각화·4D 시뮬레이션, AI·MCP BIM 자동화.
+- **핵심역량 5건:** LiDAR·스캔 역설계, 모델링 자동화, 데이터 시각화·4D 시뮬레이션, AI·MCP BIM 자동화, AI 활용 플러그인 제작·부서 배포.
 - **경력·학력:** KCMC, 집인, 공주대학교 문화재보존과학과 학사·석사. 기간·재직 상태는 원본 기재 기준입니다.
 - **연락처:** 사용자가 제공한 이메일과 PDF의 전화번호. 문의는 메일·전화 앱을 엽니다.
 
@@ -34,11 +34,13 @@ Vercel: **Vite** / Build Command **npm run build** / Output Directory **dist**. 
 - `src/content.ts`: 이름·소개·연락처·프로젝트·핵심역량·도구·경력.
 - `src/App.tsx`: 구성, 필터, 상세 보기, 이미지 확대, 메뉴.
 - `src/styles.css`: 색상, 글꼴, 반응형 레이아웃.
-- `public/images/portfolio/`: 원본 PDF에서 추출한 WebP 이미지 26개.
-- `public/downloads/lee-seungjun-portfolio.pdf`: 변경하지 않은 원본 사본, 약 52 MB. 링크를 누를 때만 요청됩니다.
+- `public/images/portfolio/`: 원본 PDF에서 추출한 WebP 이미지 26개와 사용자가 제공한 플러그인 PNG 이미지 2개.
+- `public/downloads/lee-seungjun-portfolio.pdf`: 플러그인 제작·배포 페이지를 추가한 12쪽 수정본, 약 30 MB. 링크를 누를 때만 요청됩니다.
 - `index.html`: 제목, 검색 설명, Open Graph. 배포 도메인이 확정되면 canonical, `og:url`, 절대 URL의 `og:image`를 추가하세요.
 
 상세 주소: `/#project/national-road-2024`, `/#capability/ai-mcp-bim`. 사진 확대 창은 Escape로 닫고 좌우 방향키로 이동합니다. 원본 PDF 버튼에는 해당 페이지 위치가 연결됩니다.
+
+플러그인 사례: `/#capability/ai-plugin-development`. 핵심역량 상단 대표 영역, 제작·배포 과정 4단계와 첨부 이미지 2장으로 구성했습니다. `featured`와 `workflow`를 포함한 콘텐츠를 `src/content.ts`에서 수정할 수 있습니다.
 
 영상은 `public/videos/`에 저장하고 항목의 `video`에 경로를 추가하세요. 현재 PDF에는 영상 파일이 없어 이미지만 표시합니다.
 

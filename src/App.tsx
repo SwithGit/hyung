@@ -12,6 +12,7 @@ import {
   Plus,
   Maximize2,
   FileText,
+  Check,
 } from "lucide-react";
 import {
   categories,
@@ -166,7 +167,7 @@ function ProjectDetail({
   }
   return (
     <article
-      className="project-detail"
+      className={`project-detail ${project.featured ? "plugin-detail" : ""}`}
       aria-labelledby={`detail-${project.id}`}
     >
       <div className="detail-title">
@@ -188,6 +189,17 @@ function ProjectDetail({
           <X size={24} />
         </button>
       </div>
+      {project.workflow && (
+        <ol className="plugin-workflow" aria-label="플러그인 제작 및 배포 과정">
+          {project.workflow.map((step, index) => (
+            <li key={step.title}>
+              <span className="workflow-number">0{index + 1}</span>
+              <h4>{step.title}</h4>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      )}
       <div className="detail-layout">
         <div className="detail-media">
           {project.video && (
@@ -202,6 +214,7 @@ function ProjectDetail({
           )}
           {project.images.map((media, index) => (
             <figure className="media-figure" key={`${media.src}-${index}`}>
+              {media.title && <h4 className="media-title">{media.title}</h4>}
               <button
                 className="detail-image"
                 onClick={() => setImageIndex(index)}
@@ -221,6 +234,9 @@ function ProjectDetail({
                 <span>{String(index + 1).padStart(2, "0")}</span>
                 {media.caption}
               </figcaption>
+              {media.description && (
+                <p className="media-description">{media.description}</p>
+              )}
             </figure>
           ))}
         </div>
@@ -354,6 +370,78 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
         <ArrowUpRight size={19} />
       </div>
+    </a>
+  );
+}
+
+function FeaturedCapability({ project }: { project: Project }) {
+  return (
+    <a
+      className="plugin-feature"
+      id={`card-${project.id}`}
+      href={`#capability/${project.id}`}
+      aria-label={`${project.title} 핵심역량 상세 보기`}
+    >
+      <div className="plugin-feature-body">
+        <div className="plugin-feature-copy">
+          <span className="plugin-kicker">
+            CAPABILITY {project.number} <span>AI-ASSISTED DEVELOPMENT</span>
+          </span>
+          <h3>{project.title}</h3>
+          <p className="plugin-feature-statement">
+            필요한 도구를 만들고,
+            <br />
+            <span>함께 쓰는 방식까지.</span>
+          </p>
+          <p className="plugin-feature-description">
+            영상지도 플러그인 ORTHOMAP.
+            <br />
+            기능 개발부터 화면 설계, 사용 안내서 제작과
+            <br className="feature-desktop-break" /> 부서원 배포까지 직접
+            연결했습니다.
+          </p>
+          <div className="plugin-tags">
+            <span>AI 활용 개발</span>
+            <span>UI 디자인</span>
+            <span>부서 배포</span>
+          </div>
+          <span className="plugin-feature-link">
+            제작 과정과 구동 화면 보기 <ArrowUpRight size={18} />
+          </span>
+        </div>
+        <div className="plugin-feature-visual">
+          <div className="plugin-window-bar">
+            <span className="window-dots" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span>ORTHOMAP / CAD PLUGIN</span>
+            <Check size={13} aria-hidden="true" />
+          </div>
+          <img
+            src={project.cover}
+            alt="ORTHOMAP 플러그인에서 CAD 경계를 영상지도 위에 확인하는 구동 화면"
+            width="1027"
+            height="598"
+            loading="lazy"
+            onError={imageFallback}
+          />
+          <div className="plugin-visual-caption">
+            <span className="plugin-status-dot" />
+            프로그램 내 구동 화면<span>CAD × 영상지도</span>
+          </div>
+        </div>
+      </div>
+      <ol className="plugin-feature-process" aria-label="담당 범위">
+        {project.workflow?.map((step, index) => (
+          <li key={step.title}>
+            <span>0{index + 1}</span>
+            {step.title}
+            <ArrowRight size={14} aria-hidden="true" />
+          </li>
+        ))}
+      </ol>
     </a>
   );
 }
@@ -678,7 +766,7 @@ function App() {
             <h2 id="capabilities-title">
               Capabilities<span>.</span>
             </h2>
-            <p>현장 데이터에서 자동화와 시뮬레이션까지.</p>
+            <p>현장 데이터에서 자동화, 그리고 함께 쓰는 도구의 제작까지.</p>
             <span className="heading-line" />
           </div>
           {activeItem?.kind === "capability" ? (
@@ -688,11 +776,20 @@ function App() {
               onClose={closeDetail}
             />
           ) : (
-            <div className="capability-grid">
-              {capabilities.map((item) => (
-                <ProjectCard key={item.id} project={item} />
-              ))}
-            </div>
+            <>
+              {capabilities
+                .filter((item) => item.featured)
+                .map((item) => (
+                  <FeaturedCapability key={item.id} project={item} />
+                ))}
+              <div className="capability-grid">
+                {capabilities
+                  .filter((item) => !item.featured)
+                  .map((item) => (
+                    <ProjectCard key={item.id} project={item} />
+                  ))}
+              </div>
+            </>
           )}
         </section>
 

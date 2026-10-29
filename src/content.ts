@@ -1,4 +1,4 @@
-// 실제 콘텐츠의 근거: 이승준_포트폴리오.pdf (11쪽).
+// 실제 콘텐츠의 근거: 포트폴리오 12쪽과 사용자가 제공한 플러그인 구동·배포 이미지.
 // 기간·역할·성과는 원본을 기준으로 정리했습니다. 미기재 지역·면적은 추가하지 않습니다.
 const asset = (name: string) => `/images/portfolio/${name}.webp`;
 export const studio = {
@@ -11,7 +11,7 @@ export const studio = {
     "도로와 철도의 토공·구조물을 3차원 모델로 연결하고, 설계 데이터를 수량·도면·시각화 산출물로 이어갑니다.",
     "국도, 방음터널, 고속철도, 지하철도 프로젝트에서 BIM 모델링과 통합모델 구축, 반복 작업의 자동화를 수행했습니다.",
     "드론 LiDAR·스캔 기반 역설계부터 매개변수 모델링, 4D 공정 시뮬레이션까지. 프로젝트의 맥락에 맞는 도구로 설계 정보를 구체화합니다.",
-    "AI·MCP를 활용한 표준횡단(PKT) 제작 소프트웨어도 직접 기획하며, 데이터로 연결되는 BIM 작업 방식을 탐구하고 있습니다.",
+    "AI·MCP를 활용한 표준횡단(PKT) 소프트웨어와 영상지도 플러그인을 직접 기획·제작합니다. 사용 화면과 안내서를 설계하고 부서원들에게 배포하며, 함께 활용하는 도구로 발전시키고 있습니다.",
   ],
   email: "bokjun0522@naver.com",
   phone: "010-9551-8279",
@@ -20,7 +20,7 @@ export const studio = {
   profileImageAlt:
     "이승준 포트폴리오 표지의 철도·교량·터널 와이어프레임 일러스트",
   resumeUrl: "/downloads/lee-seungjun-portfolio.pdf",
-  pdfSize: "52 MB",
+  pdfSize: "30 MB · 12쪽",
 };
 
 export const categories = ["전체", "도로", "철도", "지하철도"] as const;
@@ -34,7 +34,12 @@ export type Project = {
   category: string;
   period?: string;
   cover: string;
-  images: { src: string; caption: string }[];
+  images: {
+    src: string;
+    caption: string;
+    title?: string;
+    description?: string;
+  }[];
   description: string;
   concept: string;
   tools?: string[];
@@ -45,6 +50,8 @@ export type Project = {
   relatedIds?: string[];
   note?: string;
   video?: string; // 원본 영상이 있을 때 /videos/example.mp4 경로를 추가하세요.
+  featured?: boolean;
+  workflow?: { title: string; description: string }[];
 };
 
 export const projects: Project[] = [
@@ -374,6 +381,64 @@ export const capabilities: Project[] = [
     ],
     note: "원본에 오프라인 데모 모드·샘플 데이터로 표기된 시연 화면입니다. 실제 서버 호출 및 파일 변경은 없는 데모입니다.",
     sourcePages: [11],
+  },
+  {
+    id: "ai-plugin-development",
+    kind: "capability",
+    number: "05",
+    title: "AI를 활용한 플러그인 제작",
+    subtitle: "ORTHOMAP · From idea to team workflow",
+    category: "자체 제작 · 부서 배포",
+    featured: true,
+    cover: "/images/portfolio/orthomap-running.png",
+    images: [
+      {
+        src: "/images/portfolio/orthomap-running.png",
+        title: "프로그램 내 구동",
+        caption: "CAD 선택 경계와 영상지도를 연결한 실제 구동 화면",
+        description:
+          "CAD에서 선택한 경계를 지도에서 확인하고, 해상도를 지정해 경계 영역을 저장·배치하도록 구성했습니다.",
+      },
+      {
+        src: "/images/portfolio/orthomap-planning-distribution.png",
+        title: "프로그램 기획·디자인 및 배포",
+        caption: "사용 흐름, 사내 배포 안내서와 설치 아이콘",
+        description:
+          "실행·설정·영상 확인·병합의 흐름을 설계하고, 사용 안내서와 설치 아이콘을 제작해 부서원들에게 배포했습니다.",
+      },
+    ],
+    description: "직접 만든 도구를, 함께 쓰는 업무 방식으로.",
+    concept:
+      "AI를 활용해 CAD 작업을 지원하는 영상지도 플러그인을 기획·제작했습니다. 기능 개발에서 사용 화면 설계, 안내서와 아이콘 제작, 부서원 배포까지 연결해 동료들이 업무에 활용할 수 있도록 구성했습니다.",
+    tasks: [
+      "업무에 필요한 기능 기획 및 AI 활용 개발",
+      "프로그램 실행 흐름과 UI 디자인",
+      "사용 안내서·설치 아이콘 제작 및 부서 배포",
+    ],
+    technologies: [
+      "CAD 경계와 영상지도 연계",
+      "해상도 지정 및 경계 영역 저장·배치",
+      "영상 확인·다운로드·병합 흐름 구성",
+    ],
+    outcomes: [
+      "영상지도 플러그인 제작",
+      "실행·설정·영상 확인·병합 화면 구성",
+      "사내 사용 안내서·설치 아이콘 제작",
+      "부서원 대상 플러그인 및 안내 자료 배포",
+    ],
+    workflow: [
+      {
+        title: "기능 기획",
+        description: "CAD와 영상지도를 연결하는 작업 흐름 정의",
+      },
+      { title: "AI 활용 개발", description: "경계 확인·저장·배치 기능 구현" },
+      {
+        title: "UI·안내서 디자인",
+        description: "실행 화면과 사용 자료, 설치 아이콘 제작",
+      },
+      { title: "부서원 배포", description: "플러그인과 안내 자료를 함께 전달" },
+    ],
+    sourcePages: [12],
   },
 ];
 
